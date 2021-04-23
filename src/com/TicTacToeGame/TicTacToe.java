@@ -14,35 +14,42 @@ public class TicTacToe {
 		int index;
 		String turn;
 		boolean check = true;
-		char[] tictactoeboard = initializeBoard();
-
-		char userchoice = chooseLetter();
-		char computerchoice;
-		computerchoice = (userchoice == 'X') ? (computerchoice = 'O') : (computerchoice = 'X');
-		showBoard(tictactoeboard);
-		if (firstPlayCheck().equals(user)) {
-			System.out.println("User plays first");
-			turn = user;
-		} else {
-			System.out.println("Computer plays first");
-			turn = computer;
-		}
+		int choice;
 		do {
-			if (turn.equals(user)) {
-				index = selectIndex(tictactoeboard);
-				moveBoard(index, tictactoeboard, userchoice);
-				showBoard(tictactoeboard);
-				check = checkWinAndTie(tictactoeboard, userchoice,user);
-				turn = computer;
-			} else {
-				System.out.println("Now computer makes its move...\n");
-				index = computerTurn(tictactoeboard, computerchoice, userchoice);
-				moveBoard(index, tictactoeboard, computerchoice);
-				showBoard(tictactoeboard);
-				check = checkWinAndTie(tictactoeboard, computerchoice,computer);
+			char[] tictactoeboard = initializeBoard();
+
+			char userchoice = chooseLetter();
+			char computerchoice;
+			computerchoice = (userchoice == 'X') ? (computerchoice = 'O') : (computerchoice = 'X');
+			showBoard(tictactoeboard);
+			if (firstPlayCheck().equals(user)) {
+				System.out.println("User plays first");
 				turn = user;
+			} else {
+				System.out.println("Computer plays first");
+				turn = computer;
 			}
-		} while (!check);
+			do {
+				if (turn.equals(user)) {
+					index = selectIndex(tictactoeboard);
+					moveBoard(index, tictactoeboard, userchoice);
+					showBoard(tictactoeboard);
+					check = checkWinAndTie(tictactoeboard, userchoice, user);
+					turn = computer;
+				} else {
+					System.out.println("Now computer makes its move...\n");
+					index = computerTurn(tictactoeboard, computerchoice, userchoice);
+					moveBoard(index, tictactoeboard, computerchoice);
+					showBoard(tictactoeboard);
+					check = checkWinAndTie(tictactoeboard, computerchoice, computer);
+					turn = user;
+				}
+			} while (!check);
+			System.out.println("Do you want play another Round..\n" + "1. Yes\n" + "2. No\n" + "Enter your choice");
+			choice = scanner.nextInt();
+			scanner.nextLine();
+		} while (choice == 1);
+		System.out.println("Thank you for Playing...");
 
 		scanner.close();
 	}
@@ -151,7 +158,7 @@ public class TicTacToe {
 			}
 			check = (valid == 9) ? (true) : (false);
 			if (check)
-				System.out.println("Game Rnded in a Tie. Good Game!!!!");
+				System.out.println("Game Rnded in a Tie. Good Game!!!!\n");
 		}
 		return check;
 	}
