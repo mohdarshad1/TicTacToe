@@ -85,7 +85,7 @@ public class TicTacToe {
 		int index;
 		int valid = 0;
 		do {
-			System.out.println("Please Select Index from Positions 1-9");
+			System.out.println("Please Select Index from Positions 1-9 ");
 			index = scanner.nextInt();
 			if ((index < 1 || index > 9)) {
 				System.out.println("Invalid index");
