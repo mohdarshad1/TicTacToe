@@ -12,19 +12,39 @@ public class TicTacToe {
 
 		System.out.println("Welcome to Tic Tac Toe Game");
 
-		char[] tictactoeboard = initializeBoard();
 		int index;
+		String turn;
+		boolean check = true;
+		char[] tictactoeboard = initializeBoard();
+
 		char userchoice = chooseLetter();
 		char computerchoice;
 		computerchoice = (userchoice == 'X') ? (computerchoice = 'O') : (computerchoice = 'X');
 		showBoard(tictactoeboard);
-		if(firstPlayCheck().equals(user)) System.out.println("User Plays First");
-		else System.out.println("Computer Plays First");
-		index = selectIndex(tictactoeboard);
-		moveBoard(index, tictactoeboard, userchoice);
-		index = selectIndex(tictactoeboard);
-		moveBoard(index, tictactoeboard, userchoice);
-		
+		if (firstPlayCheck().equals(user)) {
+			System.out.println("user plays first");
+			turn = user;
+		} else {
+			System.out.println("computer plays first");
+			turn = computer;
+		}
+		do {
+			if (turn.equals(user)) {
+				index = selectIndex(tictactoeboard);
+				moveBoard(index, tictactoeboard, userchoice);
+				showBoard(tictactoeboard);
+				check = checkWinAndTie(tictactoeboard, userchoice);
+				turn = computer;
+			} 
+			else {
+				index = 9;
+			tictactoeboard[index] = computerchoice;
+			showBoard(tictactoeboard);
+			check = checkWinAndTie(tictactoeboard, computerchoice);
+			turn = user;
+			}
+		} while (!check);
+
 		scanner.close();
 	}
 
@@ -112,6 +132,28 @@ public class TicTacToe {
 	private static String firstPlayCheck() {
 		int toss = (int) (Math.random() * 10) % 2;
 		return (toss == 0) ? (user) : (computer);
+	}
+	
+	private static boolean checkWinAndTie(char[] b, char letter) {
+		boolean check;
+		if ((b[1] == letter && b[2] == letter && b[3] == letter) || (b[4] == letter && b[5] == letter && b[6] == letter)
+				|| (b[7] == letter && b[8] == letter && b[9] == letter)
+				|| (b[1] == letter && b[4] == letter && b[7] == letter)
+				|| (b[2] == letter && b[5] == letter && b[8] == letter)
+				|| (b[3] == letter && b[6] == letter && b[9] == letter)
+				|| (b[1] == letter && b[5] == letter && b[9] == letter)
+				|| (b[3] == letter && b[5] == letter && b[7] == letter)) {
+			check = true;
+		} else {
+			int valid = 0;
+			for (int index = 1; index < b.length; index++) {
+				if (b[index] == ' ')
+					valid++;
+			}
+			check = (valid == 9) ? (true) : (false);
+
+		}
+		return check;
 	}
 
 }
