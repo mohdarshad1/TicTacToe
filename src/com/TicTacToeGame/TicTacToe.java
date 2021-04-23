@@ -5,6 +5,8 @@ import java.util.Scanner;
 public class TicTacToe {
 
 	static Scanner scanner = new Scanner(System.in);
+	private static String user = "User";
+	private static String computer = "Computer";
 
 	public static void main(String[] args) {
 
@@ -16,10 +18,13 @@ public class TicTacToe {
 		char computerchoice;
 		computerchoice = (userchoice == 'X') ? (computerchoice = 'O') : (computerchoice = 'X');
 		showBoard(tictactoeboard);
+		if(firstPlayCheck().equals(user)) System.out.println("User Plays First");
+		else System.out.println("Computer Plays First");
 		index = selectIndex(tictactoeboard);
 		moveBoard(index, tictactoeboard, userchoice);
 		index = selectIndex(tictactoeboard);
 		moveBoard(index, tictactoeboard, userchoice);
+		
 		scanner.close();
 	}
 
@@ -80,14 +85,14 @@ public class TicTacToe {
 		int index;
 		int valid = 0;
 		do {
-			System.out.println("\nPlease Select Index from Positions 1-9");
+			System.out.println("Please Select Index from Positions 1-9");
 			index = scanner.nextInt();
 			if ((index < 1 || index > 9)) {
-				System.out.println("invalid index");
+				System.out.println("Invalid index");
 
 			} else {
 				if (!(tictactoeboard[index] == ' '))
-					System.out.println("This Index is Not Free... Please select another...");
+					System.out.println("This Index is not Free... Please Select another...");
 
 				else
 					break;
@@ -102,6 +107,11 @@ public class TicTacToe {
 		tictactoeboard[index] = letter;
 		showBoard(tictactoeboard);
 		return tictactoeboard;
+	}
+
+	private static String firstPlayCheck() {
+		int toss = (int) (Math.random() * 10) % 2;
+		return (toss == 0) ? (user) : (computer);
 	}
 
 }
