@@ -22,10 +22,10 @@ public class TicTacToe {
 		computerchoice = (userchoice == 'X') ? (computerchoice = 'O') : (computerchoice = 'X');
 		showBoard(tictactoeboard);
 		if (firstPlayCheck().equals(user)) {
-			System.out.println("user plays first");
+			System.out.println("User plays first");
 			turn = user;
 		} else {
-			System.out.println("computer plays first");
+			System.out.println("Computer plays first");
 			turn = computer;
 		}
 		do {
@@ -198,6 +198,15 @@ public class TicTacToe {
 			}
 
 		}
+		return index;
+	}
+	
+	private static int checkcorner(char[]tictactoeboard,char computerchoice) {
+		int index=0;
+		if(tictactoeboard[1]==' ') index=1;
+		if(tictactoeboard[3]==' ') index=3;
+		if(tictactoeboard[7]==' ') index=7;
+		if(tictactoeboard[9]==' ') index=9;
 		return index;
 	}
 
