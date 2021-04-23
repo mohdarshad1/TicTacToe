@@ -13,15 +13,15 @@ public class TicTacToe {
 		char[] tictactoeboard = initializeBoard();
 		char userchoice = chooseLetter();
 		char computerchoice;
-		if (userchoice == 'X') {
-			computerchoice = 'O';
-		} else {
-			computerchoice = 'X';
-		}
+		computerchoice = (userchoice == 'X') ? (computerchoice = 'O') : (computerchoice = 'X');
+		showBoard(tictactoeboard);
 		scanner.close();
 	}
 
-	public static char[] initializeBoard() {
+	/**
+	 * method to create tictactoe board
+	 */
+	private static char[] initializeBoard() {
 		char[] tictactoeboard = new char[10];
 
 		for (int index = 1; index < tictactoeboard.length; index++) {
@@ -34,7 +34,7 @@ public class TicTacToe {
 	/**
 	 * method to allow player to choose letter
 	 */
-	public static char chooseLetter() {
+	private static char chooseLetter() {
 
 		char userchoice = ' ';
 		System.out.println("Please Choose a Letter\n" + "1. X\n" + "2. O");
@@ -55,5 +55,13 @@ public class TicTacToe {
 		}
 		}
 		return userchoice;
+	}
+
+	private static void showBoard(char[] tictactoeboard) {
+		 {
+			System.out.println(tictactoeboard[1] + " | " + tictactoeboard[2] + " | " + tictactoeboard[3]+"\n---------");
+			System.out.println(tictactoeboard[1] + " | " + tictactoeboard[2] + " | " + tictactoeboard[3]+"\n---------");
+			System.out.println(tictactoeboard[1] + " | " + tictactoeboard[2] + " | " + tictactoeboard[3]+"\n---------");
+		}
 	}
 }
