@@ -5,13 +5,12 @@ import java.util.Scanner;
 public class TicTacToe {
 
 	static Scanner scanner = new Scanner(System.in);
-	private static String user = "User";
-	private static String computer = "Computer";
+	private static String user = "user";
+	private static String computer = "computer";
 
 	public static void main(String[] args) {
 
 		System.out.println("Welcome to Tic Tac Toe Game");
-
 		int index;
 		String turn;
 		boolean check = true;
@@ -33,13 +32,14 @@ public class TicTacToe {
 				index = selectIndex(tictactoeboard);
 				moveBoard(index, tictactoeboard, userchoice);
 				showBoard(tictactoeboard);
-				check = checkWinAndTie(tictactoeboard, userchoice);
+				check = checkWinAndTie(tictactoeboard, userchoice,user);
 				turn = computer;
 			} else {
+				System.out.println("Now computer makes its move...\n");
 				index = computerTurn(tictactoeboard, computerchoice, userchoice);
 				moveBoard(index, tictactoeboard, computerchoice);
 				showBoard(tictactoeboard);
-				check = checkWinAndTie(tictactoeboard, computerchoice);
+				check = checkWinAndTie(tictactoeboard, computerchoice,computer);
 				turn = user;
 			}
 		} while (!check);
@@ -67,7 +67,7 @@ public class TicTacToe {
 		{
 			System.out.println(tictactoeboard[1] + " | " + tictactoeboard[2] + " | " + tictactoeboard[3] + "\n-----------");
 			System.out.println(tictactoeboard[4] + " | " + tictactoeboard[5] + " | " + tictactoeboard[6] + "\n-----------");
-			System.out.println(tictactoeboard[7] + " | " + tictactoeboard[8] + " | " + tictactoeboard[9] + "\n-----------");
+			System.out.println(tictactoeboard[7] + " | " + tictactoeboard[8] + " | " + tictactoeboard[9] + "\n-----------" + "\n");
 		}
 	}
 
@@ -102,12 +102,11 @@ public class TicTacToe {
 	 */
 	private static int selectIndex(char[] tictactoeboard) {
 		int index;
-		int valid = 0;
 		do {
 			System.out.println("Please Select Index from Positions 1-9 ");
 			index = scanner.nextInt();
 			if ((index < 1 || index > 9)) {
-				System.out.println("Invalid index");
+				System.out.println("Invalid Index");
 
 			} else {
 				if (!(tictactoeboard[index] == ' '))
@@ -124,7 +123,6 @@ public class TicTacToe {
 
 	private static char[] moveBoard(int index, char[] tictactoeboard, char letter) {
 		tictactoeboard[index] = letter;
-		showBoard(tictactoeboard);
 		return tictactoeboard;
 	}
 
@@ -132,8 +130,8 @@ public class TicTacToe {
 		int toss = (int) (Math.random() * 10) % 2;
 		return (toss == 0) ? (user) : (computer);
 	}
-	
-	private static boolean checkWinAndTie(char[] b, char letter) {
+
+	private static boolean checkWinAndTie(char[] b, char letter, String player) {
 		boolean check;
 		if ((b[1] == letter && b[2] == letter && b[3] == letter) || (b[4] == letter && b[5] == letter && b[6] == letter)
 				|| (b[7] == letter && b[8] == letter && b[9] == letter)
@@ -142,24 +140,31 @@ public class TicTacToe {
 				|| (b[3] == letter && b[6] == letter && b[9] == letter)
 				|| (b[1] == letter && b[5] == letter && b[9] == letter)
 				|| (b[3] == letter && b[5] == letter && b[7] == letter)) {
+			if(player.equals(user)) System.out.println("Congratulations!!! You have won!!!");
+			else System.out.println("Too bad, You have Lost the Game. Better Luck Next Time");
 			check = true;
 		} else {
 			int valid = 0;
 			for (int index = 1; index < b.length; index++) {
-				if (b[index] == ' ')
+				if (!(b[index] == ' '))
 					valid++;
 			}
 			check = (valid == 9) ? (true) : (false);
-
+			if (check)
+				System.out.println("Game Rnded in a Tie. Good Game!!!!");
 		}
 		return check;
 	}
-	
+
 	private static int computerTurn(char[] tictactoeboard, char computerchoice, char userchoice) {
 		int index = 0;
 		index = checkWinningMove(tictactoeboard, computerchoice);
 		if (index == 0)
 			index = checkWinningMove(tictactoeboard, userchoice);
+		if (index == 0)
+			index = checkcorner(tictactoeboard, computerchoice);
+		if (index == 0)
+			index = checkCenterAndSides(tictactoeboard, computerchoice);
 		return index;
 	}
 
@@ -173,7 +178,7 @@ public class TicTacToe {
 		if (index == 0)
 			index = checkWinningLine(1, 4, 7, tictactoeboard, letter);
 		if (index == 0)
-			index = checkWinningLine(2, 5, 6, tictactoeboard, letter);
+			index = checkWinningLine(2, 5, 8, tictactoeboard, letter);
 		if (index == 0)
 			index = checkWinningLine(3, 6, 9, tictactoeboard, letter);
 		if (index == 0)
@@ -200,16 +205,20 @@ public class TicTacToe {
 		}
 		return index;
 	}
-	
-	private static int checkcorner(char[]tictactoeboard,char computerchoice) {
-		int index=0;
-		if(tictactoeboard[1]==' ') index=1;
-		if(tictactoeboard[3]==' ') index=3;
-		if(tictactoeboard[7]==' ') index=7;
-		if(tictactoeboard[9]==' ') index=9;
+
+	private static int checkcorner(char[] tictactoeboard, char computerchoice) {
+		int index = 0;
+		if (tictactoeboard[1] == ' ')
+			index = 1;
+		if (tictactoeboard[3] == ' ')
+			index = 3;
+		if (tictactoeboard[7] == ' ')
+			index = 7;
+		if (tictactoeboard[9] == ' ')
+			index = 9;
 		return index;
 	}
-	
+
 	private static int checkCenterAndSides(char[] tictactoeboard, char computerchoice) {
 		int index = 0;
 		if (tictactoeboard[5] == ' ')
