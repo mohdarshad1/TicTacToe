@@ -17,8 +17,9 @@ public class TicTacToe {
 		computerchoice = (userchoice == 'X') ? (computerchoice = 'O') : (computerchoice = 'X');
 		showBoard(tictactoeboard);
 		index = selectIndex(tictactoeboard);
-		tictactoeboard[index] = userchoice;
-		showBoard(tictactoeboard);
+		moveBoard(index, tictactoeboard, userchoice);
+		index = selectIndex(tictactoeboard);
+		moveBoard(index, tictactoeboard, userchoice);
 		scanner.close();
 	}
 
@@ -33,6 +34,17 @@ public class TicTacToe {
 		}
 
 		return tictactoeboard;
+	}
+
+	/**
+	 * Method for showing board
+	 */
+	private static void showBoard(char[] tictactoeboard) {
+		{
+			System.out.println(tictactoeboard[1] + " | " + tictactoeboard[2] + " | " + tictactoeboard[3] + "\n-----------");
+			System.out.println(tictactoeboard[4] + " | " + tictactoeboard[5] + " | " + tictactoeboard[6] + "\n-----------");
+			System.out.println(tictactoeboard[7] + " | " + tictactoeboard[8] + " | " + tictactoeboard[9] + "\n-----------");
+		}
 	}
 
 	/**
@@ -62,17 +74,6 @@ public class TicTacToe {
 	}
 
 	/**
-	 * Method for showing board
-	 */
-	private static void showBoard(char[] tictactoeboard) {
-		{
-			System.out.println(tictactoeboard[1] + " | " + tictactoeboard[2] + " | " + tictactoeboard[3] + "\n-----------");
-			System.out.println(tictactoeboard[4] + " | " + tictactoeboard[5] + " | " + tictactoeboard[6] + "\n-----------");
-			System.out.println(tictactoeboard[7] + " | " + tictactoeboard[8] + " | " + tictactoeboard[9] + "\n-----------");
-		}
-	}
-
-	/**
 	 * Method for taking index from user
 	 */
 	private static int selectIndex(char[] tictactoeboard) {
@@ -81,13 +82,26 @@ public class TicTacToe {
 		do {
 			System.out.println("\nPlease Select Index from Positions 1-9");
 			index = scanner.nextInt();
-			if (tictactoeboard[index] == ' ')
-				break;
-			else
-				System.out.println("This Index is Not Free... Please Select another...");
-		} while (!(tictactoeboard[index] == ' '));
+			if ((index < 1 || index > 9)) {
+				System.out.println("invalid index");
+
+			} else {
+				if (!(tictactoeboard[index] == ' '))
+					System.out.println("This Index is Not Free... Please select another...");
+
+				else
+					break;
+			}
+
+		} while (true);
 
 		return index;
+	}
+
+	private static char[] moveBoard(int index, char[] tictactoeboard, char letter) {
+		tictactoeboard[index] = letter;
+		showBoard(tictactoeboard);
+		return tictactoeboard;
 	}
 
 }
