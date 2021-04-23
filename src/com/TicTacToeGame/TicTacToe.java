@@ -209,5 +209,23 @@ public class TicTacToe {
 		if(tictactoeboard[9]==' ') index=9;
 		return index;
 	}
+	
+	private static int checkCenterAndSides(char[] tictactoeboard, char computerchoice) {
+		int index = 0;
+		if (tictactoeboard[5] == ' ')
+			index = 5;
+		else {
+			if (tictactoeboard[2] == ' ')
+				index = 2;
+			if (tictactoeboard[4] == ' ')
+				index = 4;
+			if (tictactoeboard[6] == ' ')
+				index = 6;
+			if (tictactoeboard[8] == ' ')
+				index = 8;
+		}
+
+		return index;
+	}
 
 }
